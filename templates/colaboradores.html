@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Colaboradores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container py-5">
+        <!--Botão de Voltar e Titulo-->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-dark">Gerenciamento de Colaboradores</h2>
+            <a href="/" class="btn btn-secondary">Voltar ao Menu</a>
+        </div>
+
+        <div class="row g-4">
+            <!--Formulario de cadastro-->
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 p-3">
+                    <h5 class="card-title text-primary mb-3">Novo Colaborador</h5>
+                    <form action="/colaboradores" method="POST">
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome Completo</label>
+                            <input type="text" class="form-control" id="nome" name="nome">
+                        </div>
+                        <div class="mb-3">
+                            <label for="setor" class="form-label">Setor</label>
+                            <input type="text" class="form-control" id="setor" name="setor" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+
+            
+
+            <!--Tabela de listagem-->
+            <div class="col-md-8">
+            <!--Barra de pesquisa-->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="pesquisaID" placeholder="Pesquisar colaborador por ID">
+                </div>
+            </div>
+                <!--Tabela-->
+                <div class="card shadow-sm border-0 p-3">
+                    <h5 class="card-title text-secondary mb-3">Colaboradores Cadastrados</h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>Setor</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if colaboradores %}
+                                    {% for c in colaboradores %}
+                                    <tr>
+                                        <td>{{ c.ID }}</td>
+                                        <td>{{ c.Nome }}</td>
+                                        <td>{{ c.Setor }}</td>
+                                        <td>
+                                            <a href="/colaboradores/editar/{{ c.ID}}" class="btn btn-warning btn-sm">EDITAR</a>
+                                            <a href="/colaboradores/excluir/{{ c.ID}}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir esse colaborador?')">EXCLUIR</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="4" class="text-center">Nenhum colaborador cadastrado ainda.</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!--Script filtro em tempo real pesquisa ID-->
+    <script>
+        document.getElementById('pesquisaID').addEventListener('keyup', function(){
+            var termo = this.value.toLowerCase();
+            var linhas = document.querySelectorAll('table tbody tr');
+
+            linhas.forEach(function(linha){
+                //celula ID, primeira coluna, indice 0
+                var colunaID = linha.getElementsByTagName('td')[0];
+
+                if (colunaID) {
+                    var textoID = colunaID.textContent.toLowerCase();
+                    //Se o ID contiver o texto digitado ou o campo estiver vazio
+                    if (textoID.indexOf(termo) > -1 || termo === ''){
+                        linha.style.display = '';
+                    } else {
+                        linha.style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

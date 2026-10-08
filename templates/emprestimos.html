@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Empréstimos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container py-5">
+        <!-- Título e Botão Voltar -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-dark">EMPRÉSTIMO DE EQUIPAMENTO</h2>
+            <a href="/" class="btn btn-secondary">Voltar ao Menu</a>
+        </div>
+
+        <!-- Barra Superior: Pesquisa e Botão Novo -->
+        <div class="row mb-4 align-items-center">
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="pesquisaID" placeholder="Pesquisar por ID empréstimo">
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <a href="/emprestimos/novo" class="btn btn-primary">+ Novo Empréstimo</a>
+            </div>
+        </div>
+
+        <!-- Tabela de Listagem -->
+        <div class="card shadow-sm border-0 p-3">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>ID EMPRÉSTIMO</th>
+                            <th>COLABORADOR</th>
+                            <th>DATA/HORA</th>
+                            <th>SITUAÇÃO</th>
+                            <th>AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if emprestimos %}
+                            {% for e in emprestimos %}
+                            <tr>
+                                <td>{{ e.ID }}</td>
+                                <td>{{ e.Colaborador }}</td>
+                                <td>{{ e.Data }}</td>
+                                <td>
+                                    {% if e.Situacao == 1 or e.Situacao == True %}
+                                        <span class="badge bg-success">Ativo</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Finalizado</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <!-- Ações: Visualizar e Finalizar -->
+                                    <a href="/emprestimos/visualizar/{{ e.ID }}" class="btn btn-info btn-sm text-white">VIZUALIZAR</a>
+                                    {% if e.Situacao == 1 or e.Situacao == True %}
+                                        <a href="/emprestimos/finalizar/{{ e.ID }}" class="btn btn-warning btn-sm" onclick="return confirm('Deseja finalizar este empréstimo?')">FINALIZAR</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">Nenhum empréstimo registado ainda.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de Filtro em Tempo Real por ID -->
+    <script>
+        document.getElementById('pesquisaID').addEventListener('keyup', function() {
+            var termo = this.value.toLowerCase();
+            var linhas = document.querySelectorAll('table tbody tr');
+
+            linhas.forEach(function(linha) {
+                var colunaID = linha.getElementsByTagName('td')[0];
+                if (colunaID) {
+                    var textoID = colunaID.textContent.toLowerCase();
+                    if (textoID.indexOf(termo) > -1 || termo === '') {
+                        linha.style.display = '';
+                    } else {
+                        linha.style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

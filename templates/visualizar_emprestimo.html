@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprovante de Empréstimo</title>
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex justify-content-center align-items-center vh-100 m-0">
+
+    <div class="card shadow-sm p-4" style="width: 450px; border-radius: 12px;">
+        <!-- Cabeçalho do Ticket -->
+        <div class="text-center border-bottom pb-3 mb-3">
+            <h4 class="fw-bold text-primary mb-1">Comprovante de Empréstimo</h4>
+            <span class="text-muted small">Sistema de Controle de EPIs</span>
+        </div>
+
+        <!-- Informações Principais -->
+        <div class="mb-3">
+            <div class="d-flex justify-content-between mb-2">
+                <span class="fw-semibold text-secondary">ID Empréstimo:</span>
+                <span class="fw-bold">#{{ emprestimo['ID'] }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="fw-semibold text-secondary">Funcionário:</span>
+                <span class="text-end">{{ emprestimo['Colaborador'] }} <small class="text-muted">(ID: {{ emprestimo['IdColaborador'] }})</small></span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="fw-semibold text-secondary">Setor:</span>
+                <span>{{ emprestimo['Setor'] }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="fw-semibold text-secondary">Data/Hora Retirada:</span>
+                <span>{{ emprestimo['Data'] }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="fw-semibold text-secondary">Situação:</span>
+                {% if emprestimo['Situacao'] == 1 %}
+                    <span class="badge bg-success">Ativo (Em uso)</span>
+                {% else %}
+                    <span class="badge bg-secondary">Finalizado (Devolvido)</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Tabela de Equipamentos -->
+        <h6 class="fw-bold text-dark mt-4 mb-2">Equipamentos Retirados:</h6>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Equipamento</th>
+                        <th class="text-center" style="width: 80px;">Qtd</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in itens %}
+                    <tr>
+                        <td>{{ item['Nome'] }}</td>
+                        <td class="text-center">{{ item['Quantidade'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Botão de Retorno -->
+        <div class="mt-4">
+            <a href="{{ url_for('emprestimos') }}" class="btn btn-primary w-100">Voltar à Lista</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle (Opcional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
