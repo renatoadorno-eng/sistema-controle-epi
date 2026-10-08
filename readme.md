@@ -1,0 +1,47 @@
+# Sistema de Gerenciamento de EPIs
+
+Sistema desenvolvido em Python com **Flask** e **MySQL** para o controle de empréstimos, colaboradores e equipamentos de proteção individual (EPIs) de uma empresa do setor têxtil.
+
+---
+
+## Funcionalidades
+- **Gestão de Colaboradores**: Cadastro, edição, exclusão e pesquisa por nome.
+- **Gestão de Equipamentos**: Cadastro e controle de estoque de EPIs.
+- **Controle de Empréstimos**: Registo de novos empréstimos com baixa automática no stock e finalização com devolução automática ao inventário.
+- **Comprovante (Ticket)**: Visualização detalhada do empréstimo estilizada com Bootstrap 5.
+
+---
+
+## Tecnologias Utilizadas
+- **Python 3.x** / **Flask**
+- **MySQL** / **PyMySQL**
+- **Bootstrap 5**
+- **HTML5 / Jinja2**
+
+---
+
+## Como Executar o Projeto
+
+Siga os passos abaixo para rodar o sistema na sua máquina:
+
+### 1. Pré-requisitos
+Certifique-se de ter instalado:
+- Python (versão 3.x)
+- MySQL Server ativo
+
+### 2. Clonar o repositório
+```bash
+git clone [https://github.com/renatoadorno-eng/sistema-controle-epi.git](https://github.com/renatoadorno-eng/sistema-controle-epi.git)
+cd sistema-controle-epi
+````
+### 3. Configurar o ambiente virtual
+  python -m venv venv
+  ativar o ambiente
+
+### 4. Instalar dependências
+  pip install flask pymysql
+
+### 5. Criar base de dados a partir do modelo db.sql
+
+### 6. Executar aplicação
+  python3 app.py
