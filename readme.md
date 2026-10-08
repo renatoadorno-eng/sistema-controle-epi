@@ -35,13 +35,19 @@ git clone [https://github.com/renatoadorno-eng/sistema-controle-epi.git](https:/
 cd sistema-controle-epi
 ````
 ### 3. Configurar o ambiente virtual
-  python -m venv venv
-  ativar o ambiente
+  ```
+python -m venv venv
+  ```
+ativar o ambiente
 
 ### 4. Instalar dependências
-  pip install flask pymysql
-
+```
+pip install flask pymysql
+```
 ### 5. Criar base de dados a partir do modelo db.sql
 
 ### 6. Executar aplicação
-  python3 app.py
+```
+python3 app.py
+```
+  
